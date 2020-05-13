@@ -1,3 +1,14 @@
+
+Ce dépôt est un clone du projet https://github.com/Legilibre/legi.py auquel j'ai ajouté le support de la base JORF en 
+mergeant la branche [jorf](https://github.com/Seb35/legi.py/tree/jorf) du dépôt de https://github.com/Seb35. 
+
+J'ai également ajouté l'option `--autocommit`. Ce paramètre permet d'activer le mode autocommit de sqlite. 
+Par défaut, `autocommit=False` ce comportement est différent de celui de [legi.py]( https://github.com/Legilibre/legi.py) 
+afin de préserver les performances. En effet le mode autocommit ralentit de plus d'un ordre de grandeur la création de la base de données.
+
+
+## README Original
+
 legi.py est un module python qui peut :
 
 - créer une base de données SQLite à partir des archives de la base LEGI
@@ -11,7 +22,6 @@ sont pas encore implémentées directement dans legi.py, par exemple générer d
 statistiques sur l'activité législative, [trouver le texte le plus ancien encore
 en vigueur][tweet-texte-plus-ancien], etc.
 
-[![Build Status](https://travis-ci.org/Legilibre/legi.py.svg)](https://travis-ci.org/Legilibre/legi.py)
 
 ## Installation
 
