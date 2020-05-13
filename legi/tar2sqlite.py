@@ -519,6 +519,8 @@ def main():
     p.add_argument('directory')
     p.add_argument('--anomalies', action='store_true', default=False,
                    help="detect anomalies after each processed archive")
+    p.add_argument('--autocommit', action='store_true', default=False,
+                   help="Set autocommit mode for sqlite db")
     p.add_argument('--anomalies-dir', default='.')
     p.add_argument('--pragma', action='append', default=[],
                    help="Doc: https://www.sqlite.org/pragma.html | Example: journal_mode=WAL")
@@ -533,7 +535,7 @@ def main():
     if not os.path.isdir(args.anomalies_dir):
         os.mkdir(args.anomalies_dir)
 
-    db = connect_db(args.db, pragmas=args.pragma)
+    db = connect_db(args.db, pragmas=args.pragma, autocommit=args.autocommit)
     base = db.one("SELECT value FROM db_meta WHERE key = 'base'")
     last_update = db.one("SELECT value FROM db_meta WHERE key = 'last_update'")
     if not base:
