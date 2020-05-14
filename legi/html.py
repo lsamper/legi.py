@@ -704,6 +704,8 @@ if __name__ == '__main__':
     p = ArgumentParser()
     p.add_argument('command', choices=['analyze', 'clean'])
     p.add_argument('db')
+    p.add_argument('--autocommit', action='store_true', default=False,
+                   help="Set autocommit mode for sqlite db")
     p.add_argument('--dry-run', default=False, action='store_true')
     p.add_argument('--font-size', default='keep-small', choices=['drop', 'keep-small', 'preserve'],
                    help="what to do with the `size` attribute of `font` elements")
@@ -718,7 +720,7 @@ if __name__ == '__main__':
     elif args.font_size == 'preserve':
         DEFAULT_STYLE.pop('size')
 
-    db = connect_db(args.db)
+    db = connect_db(args.db, autocommit=args.autocommit)
     log_file = open(args.log_path, 'w') if args.log_path else None
     try:
         with db:
