@@ -350,10 +350,7 @@ def process_archive(db, archive_path, raw, process_links=True, check_html=True):
                 scrape_tags(attrs, root, SECTION_TA_TAGS)
                 section_id = row_id
                 contexte = root.find('CONTEXTE/TEXTE')
-                try:
-                    assert attr(contexte, 'cid') == row_cid
-                except:
-                    import pdb; pdb.set_trace()
+                assert attr(contexte, 'cid') == row_cid
                 parents = contexte.findall('.//TITRE_TM')
                 if parents:
                     attrs['parent'] = attr(parents[-1], 'id')
