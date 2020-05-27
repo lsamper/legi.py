@@ -607,36 +607,35 @@ def normalize_sommaires_num(db, dry_run=False, log_file=None):
     print("> Normalisation des numéros dans les sommaires...")
 
     counts = {}
-
     db.run("""
-        UPDATE sommaires AS so
+        UPDATE sommaires
            SET num = (
                    SELECT a.num
                      FROM articles a
-                    WHERE a.id = so.element
+                    WHERE a.id = sommaires.element
                )
-         WHERE substr(so.element, 5, 4) = 'ARTI'
-           AND COALESCE(so.num, '') <> (
+         WHERE substr(sommaires.element, 5, 4) = 'ARTI'
+           AND COALESCE(sommaires.num, '') <> (
                    SELECT COALESCE(a.num, '')
                      FROM articles a
-                    WHERE a.id = so.element
+                    WHERE a.id = sommaires.element
                )
     """)
     counts['updated num for article'] = db.changes()
 
     db.create_function('reduce_section_title', 1, reduce_section_title)
     db.run("""
-        UPDATE sommaires AS so
+        UPDATE sommaires
            SET num = (
                    SELECT reduce_section_title(s.titre_ta)
                      FROM sections s
-                    WHERE s.id = so.element
+                    WHERE s.id = sommaires.element
                )
-         WHERE substr(so.element, 5, 4) = 'SCTA'
-           AND COALESCE(so.num, '') <> (
+         WHERE substr(sommaires.element, 5, 4) = 'SCTA'
+           AND COALESCE(sommaires.num, '') <> (
                    SELECT reduce_section_title(s.titre_ta)
                      FROM sections s
-                    WHERE s.id = so.element
+                    WHERE s.id = sommaires.element
                )
     """)
     counts['updated num for section'] = db.changes()
