@@ -50,3 +50,7 @@ CREATE VIEW textes_versions_brutes_view AS
 -- migration #6
 DROP INDEX IF EXISTS sommaires_cid_idx;
 CREATE INDEX IF NOT EXISTS sommaires_cid_num_idx ON sommaires (cid, num);
+
+-- migration #7
+ALTER TABLE textes_versions ADD sm text NULL;
+ALTER TABLE textes_versions ADD mcs_txt text NULL;
